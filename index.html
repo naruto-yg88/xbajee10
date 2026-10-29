@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <title>Quick Help - Financial Support</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="app-root">
+        <div class="app-inner">
+          <div class="finance-help-general">
+            <!-- Main Form View -->
+            <div id="mainView">
+              <!-- Page Header -->
+              <div class="page-header">
+                <h1 id="pageTitle" data-i18n="financeHelp.title">Hỗ trợ nhanh</h1>
+                <div class="lang-switcher">
+                  <select id="langSelect" class="lang-select" aria-label="Language">
+                    <option value="vi_VN">Tiếng Việt</option>
+                    <option value="bn_BD">বাংলা (bn_BD)</option>
+                    <option value="en_US">English</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Vant-style Tabs -->
+              <div class="van-tabs van-tabs--line finance-tabs">
+                <div class="van-tabs__wrap">
+                  <div
+                    id="tabList"
+                    role="tablist"
+                    class="van-tabs__nav van-tabs__nav--line"
+                    aria-orientation="horizontal"
+                  >
+                    <div
+                      role="tab"
+                      class="van-tab van-tab--line van-tab--active"
+                      data-tab="deposit"
+                      tabindex="0"
+                      aria-selected="true"
+                    >
+                      <span
+                        class="van-tab__text van-tab__text--ellipsis"
+                        data-i18n="financeHelp.tabs.deposit"
+                        >Nạp tiền</span
+                      >
+                    </div>
+                    <div
+                      role="tab"
+                      class="van-tab van-tab--line"
+                      data-tab="withdrawal"
+                      tabindex="-1"
+                      aria-selected="false"
+                    >
+                      <span
+                        class="van-tab__text van-tab__text--ellipsis"
+                        data-i18n="financeHelp.tabs.withdrawal"
+                        >Rút tiền</span
+                      >
+                    </div>
+                    <div
+                      role="tab"
+                      class="van-tab van-tab--line"
+                      data-tab="account"
+                      tabindex="-1"
+                      aria-selected="false"
+                    >
+                      <span
+                        class="van-tab__text van-tab__text--ellipsis"
+                        data-i18n="financeHelp.tabs.account"
+                        >Tài khoản</span
+                      >
+                    </div>
+                    <div id="tabLine" class="van-tabs__line"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- TAB 1: DEPOSIT (?tab=deposit) -->
+              <div id="panel-deposit" class="content-wrapper">
+                <div class="question-section">
+                  <h2 class="question-title" data-i18n="financeHelp.questionTitle">
+                    Chưa nhận được tiền nạp?
+                  </h2>
+                  <p class="question-desc" data-i18n="financeHelp.questionDesc">
+                    Gửi số đơn nạp tiền và tải lên biên lai chuyển khoản ngân hàng để xác minh.
+                  </p>
+                </div>
+
+                <form id="depositForm" class="van-form form-container" novalidate>
+                  <!-- 1. Deposit Order Number -->
+                  <div class="form-item">
+                    <div class="form-label" data-i18n="financeHelp.depositOrderNumber">
+                      Số đơn nạp tiền
+                    </div>
+                    <div class="van-cell-group van-cell-group--inset">
+                      <div class="van-cell" id="cell-chargeOrderId">
+                        <div class="van-field__body">
+                          <input
+                            type="text"
+                            id="chargeOrderId"
+                            name="chargeOrderId"
+                            class="van-field__control"
+                            maxlength="20"
+                            inputmode="numeric"
+                            data-i18n-placeholder="financeHelp.placeholder.depositOrderNumber"
+                            placeholder="Vui lòng nhập số đơn nạp tiền"
+                          />
+                        </div>
+                        <div class="van-field__error-message" id="err-chargeOrderId"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 2. Account Holder Name -->
+                  <div class="form-item">
+                    <div class="form-label" data-i18n="financeHelp.accountHolderName">
+                      Tên chủ tài khoản
+                    </div>
+                    <div class="van-cell-group van-cell-group--inset">
+                      <div class="van-cell" id="cell-cardholderName">
+                        <div class="van-field__body">
+                          <input
+                            type="text"
+                            id="cardholderName"
+                            name="cardholderName"
+                            class="van-field__control"
+                            maxlength="100"
+                            data-i18n-placeholder="financeHelp.placeholder.accountHolderName"
+                            placeholder="Vui lòng nhập tên chủ tài khoản"
+                          />
+                        </div>
+                        <div class="van-field__error-message" id="err-cardholderName"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 3. Actual Transfer Amount -->
+                  <div class="form-item">
+                    <div class="form-label" data-i18n="financeHelp.actualTransferAmount">
+                      Số tiền chuyển thực tế
+                    </div>
+                    <div class="van-cell-group van-cell-group--inset">
+                      <div class="van-cell" id="cell-actualAmount">
+                        <div class="van-field__body">
+                          <input
+                            type="text"
+                            id="actualAmount"
+                            name="actualAmount"
+                            class="van-field__control"
+                            maxlength="15"
+                            inputmode="decimal"
+                            data-i18n-placeholder="financeHelp.placeholder.actualTransferAmount"
+                            placeholder="Vui lòng nhập số tiền chuyển"
+                          />
+                        </div>
+                        <div class="van-field__error-message" id="err-actualAmount"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 4. Transaction ID -->
+                  <div class="form-item">
+                    <div class="form-label" data-i18n="financeHelp.transactionIdLabel">
+                      Mã giao dịch
+                    </div>
+                    <div class="van-cell-group van-cell-group--inset">
+                      <div class="van-cell" id="cell-transactionId">
+                        <div class="van-field__body">
+                          <input
+                            type="text"
+                            id="transactionId"
+                            name="transactionId"
+                            class="van-field__control"
+                            maxlength="40"
+                            data-i18n-placeholder="financeHelp.placeholder.transactionId"
+                            placeholder="Vui lòng nhập mã giao dịch"
+                          />
+                        </div>
+                        <div class="van-field__error-message" id="err-transactionId"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 5. Bank Transfer Receipt Upload -->
+                  <div class="upload-section">
+                    <div class="upload-label" data-i18n="financeHelp.bankTransferReceipt">
+                      Biên lai chuyển khoản ngân hàng
+                    </div>
+                    <div class="file-upload" data-uploader="depositReceipt">
+                      <div class="van-uploader__wrapper">
+                        <div class="van-uploader__preview hidden" id="preview-depositReceipt">
+                          <img
+                            src=""
+                            alt="Receipt preview"
+                            class="van-uploader__preview-image"
+                            id="img-depositReceipt"
+                          />
+                          <button
+                            type="button"
+                            class="van-uploader__preview-delete"
+                            data-delete-upload="depositReceipt"
+                            aria-label="Delete"
+                          >
+                            ×
+                          </button>
+                        </div>
+                        <label class="upload-placeholder" id="placeholder-depositReceipt">
+                          <span class="upload-plus-icon">+</span>
+                          <input
+                            type="file"
+                            id="file-depositReceipt"
+                            accept="image/jpeg,image/png,image/gif,image/webp"
+                            class="hidden"
+                          />
+                        </label>
+                      </div>
+                      <div class="upload-hint" data-i18n="financeHelp.fileSizeHint">
+                        Kích thước tệp không được vượt quá 10MB
+                      </div>
+                      <div class="upload-field-error" id="err-depositReceipt"></div>
+                    </div>
+                  </div>
+
+                  <div class="submit-section">
+                    <button
+                      type="submit"
+                      class="van-button van-button--primary van-button--block van-button--round submit-btn"
+                    >
+                      <span class="van-button__text" data-i18n="financeHelp.submit">Gửi</span>
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              <!-- TAB 2: WITHDRAWAL (?tab=withdrawal) -->
+              <div id="panel-withdrawal" class="content-wrapper hidden">
+                <div class="question-section">
+                  <h2 class="question-title" data-i18n="financeHelp.withdrawalQuestionTitle">
+                    Chưa nhận được tiền rút?
+                  </h2>
+                  <p class="question-desc" data-i18n="financeHelp.withdrawalQuestionDesc">
+                    Gửi số đơn rút tiền và tải lên biên lai chuyển khoản ngân hàng để xác minh.
+                  </p>
+                </div>
+
+                <form id="withdrawalForm" class="van-form form-container" novalidate>
+                  <div class="form-item">
+                    <div class="form-label" data-i18n="financeHelp.withdrawalOrderNumber">
+                      Số đơn rút tiền
+                    </div>
+                    <div class="van-cell-group van-cell-group--inset">
+                      <div class="van-cell" id="cell-withdrawalOrderId">
+                        <div class="van-field__body">
+                          <input
+                            type="text"
+                            id="withdrawalOrderId"
+                            name="withdrawalOrderId"
+                            class="van-field__control"
+                            maxlength="20"
+                            inputmode="numeric"
+                            data-i18n-placeholder="financeHelp.placeholder.withdrawalOrderNumber"
+                            placeholder="Vui lòng nhập số đơn rút tiền"
+                          />
+                        </div>
+                        <div class="van-field__error-message" id="err-withdrawalOrderId"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="submit-section">
+                    <button
+                      type="submit"
+                      class="van-button van-button--primary van-button--block van-button--round submit-btn"
+                    >
+                      <span class="van-button__text" data-i18n="financeHelp.submit">Gửi</span>
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              <!-- TAB 3: ACCOUNT (?tab=account) -->
+              <div id="panel-account" class="content-wrapper hidden">
+                <div class="account-tab">
+                  <form id="accountForm" class="van-form form-container" novalidate>
+                    <!-- Modify Type Selection -->
+                    <div class="form-item">
+                      <div class="form-label" data-i18n="financeHelp.account.selectUpdateTitle">
+                        Chọn thông tin cần cập nhật
+                      </div>
+                      <div class="modify-type-group" role="radiogroup">
+                        <div
+                          class="van-radio is-checked"
+                          data-radio-value="LOGIN_PWD"
+                          tabindex="0"
+                        >
+                          <span class="van-radio__icon"></span>
+                          <span
+                            class="van-radio__label"
+                            data-i18n="financeHelp.account.modifyTypes.loginPwd"
+                            >Mật khẩu đăng nhập</span
+                          >
+                        </div>
+                        <div class="van-radio" data-radio-value="FUND_PWD" tabindex="0">
+                          <span class="van-radio__icon"></span>
+                          <span
+                            class="van-radio__label"
+                            data-i18n="financeHelp.account.modifyTypes.fundPwd"
+                            >Mật khẩu rút tiền</span
+                          >
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Notify Email -->
+                    <div class="form-item">
+                      <p class="section-desc" data-i18n="financeHelp.account.emailReviewHint">
+                        Kết quả xét duyệt và mật khẩu mới sẽ được gửi đến địa chỉ email bên dưới.
+                      </p>
+                      <div class="van-cell-group van-cell-group--inset">
+                        <div class="van-cell" id="cell-notifyEmail">
+                          <div class="van-field__body">
+                            <input
+                              type="email"
+                              id="notifyEmail"
+                              class="van-field__control"
+                              maxlength="100"
+                              data-i18n-placeholder="financeHelp.account.placeholder.email"
+                              placeholder="Vui lòng nhập email"
+                            />
+                          </div>
+                          <div class="van-field__error-message" id="err-notifyEmail"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Username -->
+                    <div class="form-item">
+                      <div class="form-label" data-i18n="financeHelp.account.fields.username">
+                        Tên người dùng
+                      </div>
+                      <div class="van-cell-group van-cell-group--inset">
+                        <div class="van-cell" id="cell-username">
+                          <div class="van-field__body">
+                            <input
+                              type="text"
+                              id="username"
+                              class="van-field__control"
+                              maxlength="50"
+                              data-i18n-placeholder="financeHelp.account.placeholder.username"
+                              placeholder="Vui lòng nhập tên người dùng"
+                            />
+                          </div>
+                          <div class="van-field__error-message" id="err-username"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Real Name -->
+                    <div class="form-item">
+                      <div class="form-label" data-i18n="financeHelp.account.fields.realName">
+                        Họ và tên thật
+                      </div>
+                      <div class="van-cell-group van-cell-group--inset">
+                        <div class="van-cell" id="cell-realName">
+                          <div class="van-field__body">
+                            <input
+                              type="text"
+                              id="realName"
+                              class="van-field__control"
+                              maxlength="50"
+                              data-i18n-placeholder="financeHelp.account.placeholder.realName"
+                              placeholder="Vui lòng nhập họ và tên thật"
+                            />
+                          </div>
+                          <div class="van-field__error-message" id="err-realName"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- E-Wallet -->
+                    <div class="form-item">
+                      <div class="form-label" data-i18n="financeHelp.account.fields.eWallet">
+                        Ví điện tử
+                      </div>
+                      <div class="van-cell-group van-cell-group--inset">
+                        <div class="van-cell" id="cell-eWallet">
+                          <div class="van-field__body">
+                            <input
+                              type="tel"
+                              id="eWallet"
+                              class="van-field__control"
+                              maxlength="11"
+                              data-i18n-placeholder="financeHelp.account.placeholder.eWallet"
+                              placeholder="Vui lòng nhập ví điện tử"
+                            />
+                          </div>
+                          <div class="van-field__error-message" id="err-eWallet"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- KYC Photo 1: ID Front -->
+                    <div class="upload-section">
+                      <div class="upload-label" data-i18n="financeHelp.account.fields.idFrontPhoto">
+                        Ảnh mặt trước CMND/CCCD
+                      </div>
+                      <div class="file-upload" data-uploader="idFrontPhoto">
+                        <div class="van-uploader__wrapper">
+                          <div class="van-uploader__preview hidden" id="preview-idFrontPhoto">
+                            <img
+                              src=""
+                              alt="ID Front"
+                              class="van-uploader__preview-image"
+                              id="img-idFrontPhoto"
+                            />
+                            <button
+                              type="button"
+                              class="van-uploader__preview-delete"
+                              data-delete-upload="idFrontPhoto"
+                            >
+                              ×
+                            </button>
+                          </div>
+                          <label class="upload-placeholder" id="placeholder-idFrontPhoto">
+                            <span class="upload-plus-icon">+</span>
+                            <input
+                              type="file"
+                              id="file-idFrontPhoto"
+                              accept="image/jpeg,image/png,image/gif,image/webp"
+                              class="hidden"
+                            />
+                          </label>
+                        </div>
+                        <div class="upload-hint" data-i18n="financeHelp.fileSizeHint">
+                          Kích thước tệp không được vượt quá 10MB
+                        </div>
+                        <div class="upload-field-error" id="err-idFrontPhoto"></div>
+                      </div>
+                    </div>
+
+                    <!-- KYC Photo 2: Last Pay Voucher -->
+                    <div class="upload-section">
+                      <div
+                        class="upload-label"
+                        data-i18n="financeHelp.account.fields.lastPayVoucher"
+                      >
+                        Biên lai nạp tiền thành công gần nhất
+                      </div>
+                      <div class="file-upload" data-uploader="lastPayVoucher">
+                        <div class="van-uploader__wrapper">
+                          <div class="van-uploader__preview hidden" id="preview-lastPayVoucher">
+                            <img
+                              src=""
+                              alt="Last Pay Voucher"
+                              class="van-uploader__preview-image"
+                              id="img-lastPayVoucher"
+                            />
+                            <button
+                              type="button"
+                              class="van-uploader__preview-delete"
+                              data-delete-upload="lastPayVoucher"
+                            >
+                              ×
+                            </button>
+                          </div>
+                          <label class="upload-placeholder" id="placeholder-lastPayVoucher">
+                            <span class="upload-plus-icon">+</span>
+                            <input
+                              type="file"
+                              id="file-lastPayVoucher"
+                              accept="image/jpeg,image/png,image/gif,image/webp"
+                              class="hidden"
+                            />
+                          </label>
+                        </div>
+                        <div class="upload-hint" data-i18n="financeHelp.fileSizeHint">
+                          Kích thước tệp không được vượt quá 10MB
+                        </div>
+                        <div class="upload-field-error" id="err-lastPayVoucher"></div>
+                      </div>
+                    </div>
+
+                    <div class="submit-section">
+                      <button
+                        type="submit"
+                        class="van-button van-button--primary van-button--block van-button--round submit-btn"
+                      >
+                        <span class="van-button__text" data-i18n="financeHelp.submit">Gửi</span>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <!-- Success Page View (Hidden by default) -->
+            <div id="successView" class="success-page hidden">
+              <div class="success-content">
+                <div class="success-icon">✓</div>
+                <h2 class="success-title" data-i18n="successPage.title">Gửi thành công</h2>
+                <p id="successDesc" class="success-desc" data-i18n="successPage.description">
+                  Hệ thống đang xác minh thông tin nạp tiền của bạn. Nếu nạp tiền thành công, số
+                  tiền sẽ được cộng vào tài khoản trò chơi của bạn trong vòng 10 phút.
+                </p>
+                <button
+                  type="button"
+                  id="backBtn"
+                  class="van-button van-button--primary van-button--block back-btn"
+                >
+                  <span data-i18n="successPage.back">Quay lại</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Withdrawal Status Result Dialog -->
+    <div id="resultModal" class="modal-overlay" role="dialog" aria-modal="true">
+      <div id="resultDialogBox" class="result-dialog is-success">
+        <button type="button" class="dialog-close" id="closeResultModal" aria-label="Close">
+          ×
+        </button>
+        <div class="result-dialog__header">
+          <span id="resultDialogIcon" class="result-dialog__icon" style="color: #07c160">✓</span>
+          <span id="resultDialogTitle" class="result-dialog__title">Đang xử lý khẩn cấp</span>
+        </div>
+        <div id="resultDialogContent" class="result-dialog__content"></div>
+        <div class="result-dialog__footer">
+          <button
+            type="button"
+            id="resultDialogActionBtn"
+            class="van-button van-button--primary van-button--block van-button--round"
+            style="height: 2.4rem"
+          >
+            <span data-i18n="successPage.back">Quay lại</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Account Email OTP Verification Dialog -->
+    <div id="verifyModal" class="modal-overlay" role="dialog" aria-modal="true">
+      <div class="verify-dialog">
+        <button type="button" class="dialog-close" id="closeVerifyModal" aria-label="Close">
+          ×
+        </button>
+        <div class="verify-dialog__title" data-i18n="financeHelp.account.emailVerification">
+          Xác minh email
+        </div>
+        <div class="verify-dialog__body">
+          <p
+            class="section-desc"
+            style="padding: 0"
+            data-i18n="financeHelp.account.emailReviewHint"
+          >
+            Kết quả xét duyệt và mật khẩu mới sẽ được gửi đến địa chỉ email bên dưới.
+          </p>
+          <div class="inline-field-row">
+            <div id="verifyEmailDisplay" class="email-readonly">user@example.com</div>
+            <button
+              type="button"
+              id="sendCodeBtn"
+              class="van-button van-button--primary inline-action-btn"
+            >
+              <span id="sendCodeBtnText" data-i18n="financeHelp.account.sendCode">Gửi mã</span>
+            </button>
+          </div>
+          <div class="inline-field-row">
+            <div class="van-cell" style="flex: 1; padding: 0.5rem 0.75rem">
+              <input
+                type="text"
+                id="emailOtpCode"
+                class="van-field__control"
+                maxlength="6"
+                inputmode="numeric"
+                data-i18n-placeholder="financeHelp.account.placeholder.verificationCode"
+                placeholder="Vui lòng nhập mã xác minh"
+              />
+            </div>
+          </div>
+          <p
+            class="section-hint"
+            style="padding: 0; margin-top: 0.65rem"
+            data-i18n="financeHelp.account.codeWillBeSentHint"
+          >
+            Mã xác minh sẽ được gửi đến email của bạn.
+          </p>
+          <p
+            class="section-hint"
+            style="padding: 0; margin-top: 0.2rem"
+            data-i18n="financeHelp.account.checkSpamHint"
+          >
+            Nếu không nhận được email, vui lòng kiểm tra hộp thư rác.
+          </p>
+          <div style="margin-top: 1.143rem">
+            <button
+              type="button"
+              id="confirmVerifyBtn"
+              class="van-button van-button--primary van-button--block van-button--round submit-btn"
+            >
+              <span data-i18n="financeHelp.submit">Gửi</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Image Lightbox Modal -->
+    <div id="lightboxModal" class="lightbox-overlay">
+      <button type="button" class="lightbox-close" id="closeLightbox">×</button>
+      <img id="lightboxImage" class="lightbox-img" src="" alt="Preview" />
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
